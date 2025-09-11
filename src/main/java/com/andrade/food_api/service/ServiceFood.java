@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.andrade.food_api.domain.Food;
 import com.andrade.food_api.dto.FoodDto.FoodRequest;
 import com.andrade.food_api.dto.FoodDto.FoodResponse;
+import com.andrade.food_api.exception.BadRequestException;
 import com.andrade.food_api.mapper.FoodMapper;
 import com.andrade.food_api.repository.RepositoryFoods;
 
@@ -31,11 +32,11 @@ public class ServiceFood {
     }
 
     public FoodResponse replaceFoodByIdService(long id, FoodRequest foodRequest) {
-        return foodMapper.toDto(Food.builder()
+        return foodMapper.toDto(repositiryFoods.save(Food.builder()
                 .id(id)
                 .name(foodRequest.name())
                 .price(foodRequest.price())
-                .build());
+                .build()));
     }
 
     public FoodResponse replaceWithoutIdService(Food food) {
@@ -44,6 +45,6 @@ public class ServiceFood {
 
     public FoodResponse getByIdService(long id) {
         return foodMapper.toDto(repositiryFoods.findById(id)
-                .orElseThrow(() -> new RuntimeException("Food not found")));
+                .orElseThrow(() -> new BadRequestException("Food not found")));
     }
 }

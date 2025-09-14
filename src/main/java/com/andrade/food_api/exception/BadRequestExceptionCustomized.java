@@ -1,17 +1,8 @@
 package com.andrade.food_api.exception;
 
-import java.time.LocalDateTime;
-import lombok.Builder;
-import lombok.Data;
+import lombok.experimental.SuperBuilder;
 
-@Builder
-@Data
-public class BadRequestExceptionCustomized {
+@SuperBuilder
+public class BadRequestExceptionCustomized extends ExceptionCustomized {
 
-    private String title;
-    private int status;
-    private String erroTipy;
-    private String message;
-    private LocalDateTime timeStap;
-    private String owner;
 }

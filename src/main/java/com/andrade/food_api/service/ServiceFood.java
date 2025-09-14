@@ -12,6 +12,8 @@ import com.andrade.food_api.exception.BadRequestException;
 import com.andrade.food_api.mapper.FoodMapper;
 import com.andrade.food_api.repository.RepositoryFoods;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class ServiceFood {
     @Autowired
@@ -23,14 +25,17 @@ public class ServiceFood {
         return repositiryFoods.findAll().stream().map(foodMapper::toDto).toList();
     }
 
+    @Transactional(rollbackOn=Exception.class)
     public FoodResponse addFoodService(FoodRequest foodRequest) {
         return foodMapper.toDto(repositiryFoods.save(foodMapper.toEntity(foodRequest)));
     }
 
+    @Transactional(rollbackOn=Exception.class)
     public void removeFoodService(long id) {
         repositiryFoods.deleteById(id);
     }
 
+    @Transactional(rollbackOn=Exception.class)
     public FoodResponse replaceFoodByIdService(long id, FoodRequest foodRequest) {
         return foodMapper.toDto(repositiryFoods.save(Food.builder()
                 .id(id)
@@ -38,7 +43,7 @@ public class ServiceFood {
                 .price(foodRequest.price())
                 .build()));
     }
-
+    @Transactional(rollbackOn=Exception.class)
     public FoodResponse replaceWithoutIdService(Food food) {
         return foodMapper.toDto(repositiryFoods.save(food));
     }

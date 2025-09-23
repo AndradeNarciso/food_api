@@ -1,8 +1,9 @@
 package com.andrade.food_api.service;
 
-import java.util.List;
+import org.springframework.data.domain.Pageable;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import com.andrade.food_api.domain.Food;
@@ -21,21 +22,21 @@ public class ServiceFood {
     @Autowired
     private FoodMapper foodMapper;
 
-    public List<FoodResponse> getAllFoods() {
-        return repositiryFoods.findAll().stream().map(foodMapper::toDto).toList();
+    public Page<FoodResponse> getAllFoods(Pageable pageable) {
+        return repositiryFoods.findAll(pageable).map(foodMapper::toDto);
     }
 
-    @Transactional(rollbackOn=Exception.class)
+    @Transactional(rollbackOn = Exception.class)
     public FoodResponse addFoodService(FoodRequest foodRequest) {
         return foodMapper.toDto(repositiryFoods.save(foodMapper.toEntity(foodRequest)));
     }
 
-    @Transactional(rollbackOn=Exception.class)
+    @Transactional(rollbackOn = Exception.class)
     public void removeFoodService(long id) {
         repositiryFoods.deleteById(id);
     }
 
-    @Transactional(rollbackOn=Exception.class)
+    @Transactional(rollbackOn = Exception.class)
     public FoodResponse replaceFoodByIdService(long id, FoodRequest foodRequest) {
         return foodMapper.toDto(repositiryFoods.save(Food.builder()
                 .id(id)
@@ -43,7 +44,8 @@ public class ServiceFood {
                 .price(foodRequest.price())
                 .build()));
     }
-    @Transactional(rollbackOn=Exception.class)
+
+    @Transactional(rollbackOn = Exception.class)
     public FoodResponse replaceWithoutIdService(Food food) {
         return foodMapper.toDto(repositiryFoods.save(food));
     }

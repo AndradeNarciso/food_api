@@ -7,14 +7,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.andrade.food_api.exception.BadRequestException;
 import com.andrade.food_api.exception.BadRequestExceptionCustomized;
 import com.andrade.food_api.exception.ExceptionValidation;
 
-@RestControllerAdvice
+@ControllerAdvice
 public class HandlerException {
 
         @ExceptionHandler(BadRequestException.class)

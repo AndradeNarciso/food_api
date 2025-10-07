@@ -16,18 +16,36 @@ class RepositoryFoodsTest {
     @Test
     @DisplayName("Testing  save food function")
     void shouldSaveFoodAndReturnFood() {
-        Food foodTest = createFood();
+        Food foodTest = createFood("Something",13.44);
         Food foodSeved = foodRepository.save(foodTest);
-
+    
         Assertions.assertNotNull(foodSeved);
         Assertions.assertNotNull(foodSeved.getId());
 
     }
 
-    private Food createFood() {
+    @Test
+    @DisplayName("Testing update food function")
+    void shouldUpdateFood() {
+      //  Food foodSaved = foodRepository.save(createFood("Something",13.44));
+
+       // String oldName = foodSaved.getName();
+
+      //  foodSaved.setName("Other things");
+
+       // foodSaved = foodRepository.save(foodSaved);
+        
+
+       // Assertions.assertNotNull(foodSaved);
+       // Assertions.assertNotNull(foodSaved.getId());
+      //  Assertions.assertNotEquals(oldName, foodSaved.getName());
+
+    }
+
+    private Food createFood(String name, double price) {
         return Food.builder()
-                .name("Something")
-                .price(12.32)
+                .name(name)
+                .price(price)
                 .build();
     }
 }
